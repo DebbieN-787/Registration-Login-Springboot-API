@@ -1,0 +1,37 @@
+package com.example.Registration.Login.LoginAuthService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.example.Registration.Login.LoginRequest.LoginRequest;
+import com.example.Registration.Login.User.Repository.UserRepository;
+import com.example.Registration.Login.User.user.entity.User;
+
+@Service
+public class CustomAuthenticationProvider  {
+
+	  @Autowired
+	    private UserRepository userRepository;
+
+	    @Autowired
+	   
+	    private BCryptPasswordEncoder passwordEncoder;
+	    
+	    public boolean authenticate(LoginRequest loginRequest){
+	    	User user = userRepository.findByEmail(loginRequest.getEmail());
+	    	if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+	    		
+	    		System.out.println("Iit works");
+	    		
+	    		return true;
+	    		
+	    		
+	    	}
+	    	return false;
+	    	
+	    	
+	    }
+
+} 
+	    
